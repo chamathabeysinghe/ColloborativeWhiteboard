@@ -42,7 +42,9 @@ io.on('connection', function (socket) {
 
   socket.on('draw message', function(msg){
     console.log('message: ' + msg);
-    io.emit('receive message', msg);
+    //io.emit('receive message', msg);
+    socket.broadcast.emit('receive message', msg);
+
   });
 
 });

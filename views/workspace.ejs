@@ -398,13 +398,21 @@
         // use e.keyCode
         if(e.keyCode==46){
             canvas.getActiveObject().remove();
+            sendMessage();
         }
     };
+
 
     canvas.on('text:changed', function(e) {
         //this will only work using the dev build
         sendMessage();
     });
+    canvas.on('object:modified', function(e) {
+        //do something, maybe count the number of characters
+        sendMessage();
+    });
+
+
     document.onkeyup=function (e) {
 //        sendMessage();
 
