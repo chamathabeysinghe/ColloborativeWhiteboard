@@ -327,6 +327,8 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 
+<script src="/socket.io/socket.io.js"></script>
+
 
 <script>
     var canvas = new fabric.Canvas('canvas');
@@ -341,7 +343,7 @@
     });
     rect.selectable=false;
     // "add" rectangle onto canvas
-    canvas.add(rect);
+    //canvas.add(rect);
 //
 //    var text = new fabric.Text('hello world', { left: 100, top: 100 });
 //    canvas.add(text);
@@ -383,6 +385,7 @@
         console.log("Dropped");
         console.log(ev.clientX+"  "+ev.clientY);
         AddElement(ev.clientX-300,ev.clientY-100);
+        sendMessage();
     }
 
     function allowDrop(ev) {
@@ -397,6 +400,46 @@
             canvas.getActiveObject().remove();
         }
     };
+
+    canvas.on('text:changed', function(e) {
+        //this will only work using the dev build
+        sendMessage();
+    });
+    document.onkeyup=function (e) {
+//        sendMessage();
+
+    }
+
+    var socket = io();
+    socket.on('receive message', function(msg){
+        console.log("Receive a message oooi");
+        loadCanvas(msg);
+    });
+
+    function sendMessage() {
+        var json = JSON.stringify( canvas.toJSON() );
+
+        console.log(json);
+//        socket.broadcast.emit('draw message', json);
+
+        socket.emit('draw message',json);
+    }
+
+    function loadCanvas(json) {
+
+        // parse the data into the canvas
+        canvas.loadFromJSON(json);
+
+        // re-render the canvas
+        canvas.renderAll();
+
+        // optional
+        canvas.calculateOffset();
+    }
+
 </script>
+
+
+
 </body>
 </html>
