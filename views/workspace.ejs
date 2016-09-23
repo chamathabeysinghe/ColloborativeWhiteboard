@@ -754,7 +754,15 @@
 
 <!--code for fabric js-->
 <script>
-    var canvas = new fabric.Canvas('canvas');
+//    var canvas = new fabric.Canvas('canvas');
+var canvas = new fabric.Canvas('canvas',{backgroundColor : "#fff"});
+console.log(canvas);
+canvas.backgroundColor="white";
+canvas.renderTop();
+canvas.backgroundColor="white";
+canvas.renderAll();
+
+
 </script>
 
 <!--code for actions in js-->
