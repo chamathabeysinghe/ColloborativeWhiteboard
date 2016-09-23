@@ -403,11 +403,11 @@
                 <div class="row" style="margin-top: 30px;">
                     <div class="alert alert-success" role="alert" id="ai_tips">
                         <h4 class="alert-heading">Here is a Tip!</h4>
-                        <p>Want to know about
+                        <!--<p>Want to know about-->
 
-                            <a href="#" class="" data-toggle="modal" data-target="#myModal" data-content="<p>here is content</p>" data-title="Post your video">Ranil Wickramasinghe</a>
+                            <!--<a href="#" class="" data-toggle="modal" data-target="#myModal" data-content="<p>here is content</p>" data-title="Post your video">Ranil Wickramasinghe</a>-->
 
-                        </p>
+                        <!--</p>-->
                     </div>
                 </div>
             </div>
@@ -699,7 +699,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                <h2 class="modal-title" id="myModalLabel">Modal title</h2>
             </div>
             <div class="modal-body">
 
@@ -911,6 +911,7 @@
 
         var entityArray=msg[0];
         var searchResultArray=msg[1];
+        $('#ai_tips').html('<h4 class="alert-heading">Here is a Tip!</h4>');
         for (i = 0; i < entityArray.length; i++) {
             appendTips(entityArray[i],searchResultArray[i]);
         }
@@ -945,7 +946,7 @@
         console.log(content);
         var currentHtml=$('#ai_tips').html();
         var appendHtml='<p>Want to know about ' +
-                '<a href="#" class="" data-toggle="modal" data-target="#myModal" data-content="'+content+'" data-title='+text+'>'+text+'</a>' +
+                '<a href="#" class="" data-toggle="modal" data-target="#myModal" data-content="'+content+'" data-title="'+text+'">'+text+'</a>' +
                 '</p>';
         $('#ai_tips').html(currentHtml+appendHtml);
     }
