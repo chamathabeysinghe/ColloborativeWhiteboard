@@ -65,13 +65,13 @@ var NewsSearch = function(){
 
 }
 
-var WebSearch = function(){
+exports.WebSearch = function(text, callback){
 
     var apiKey = 'fee561f616bf409cb7c39bedf29426ab';
 
     var Url = 'https://api.cognitive.microsoft.com/bing/v5.0/search?q=';
 
-    WebSearch.prototype.search = function(text, callback){
+    var search = function(text, callback){
         request(
             {
                 url: Url+ text,
@@ -90,10 +90,11 @@ var WebSearch = function(){
             });
     }
 
+    search(text, callback);
+
 }
 
 exports.EntityLinking = EntityLinking;
-exports.WebSearch = WebSearch;
 exports.NewsSearch = NewsSearch;
 
 var test = function (data){
