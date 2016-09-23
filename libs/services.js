@@ -12,7 +12,7 @@ var EntityLinking = function(){
 
     var Url = 'https://api.projectoxford.ai/entitylinking/v1.0/link'
 
-    EntityLinking.prototype.find = function(text){
+    EntityLinking.prototype.find = function(text, callback){
 
         request(
             {
@@ -22,20 +22,15 @@ var EntityLinking = function(){
                 'Content-Type': 'text/plain',
                 'Ocp-Apim-Subscription-Key': apiKey
             },
-                body: text
+                body: text,
+                callback: test,
             },
             function(error, response, body) {
                 if (error) {
-
-                    return error;
+                    callback(error);
 
                 } else {
-
-                    return {
-                        response: response,
-                        body: body
-                    }
-
+                    callback(JSON.parse(body));
                 }
             });
     }
@@ -48,7 +43,7 @@ var NewsSearch = function(){
 
     var Url = 'https://api.cognitive.microsoft.com/bing/v5.0/news/?q=';
 
-    NewsSearch.prototype.search = function(text){
+    NewsSearch.prototype.search = function(text, callback){
         request(
             {
                 url: Url+ text,
@@ -59,14 +54,10 @@ var NewsSearch = function(){
             },
             function(error, response, body) {
                 if (error) {
-                    console.log(error);
-                    return error;
+                    callback(error);
+
                 } else {
-                    console.log(response.statusCode, body);
-                    return {
-                        response: response,
-                        body: body
-                    }
+                    callback(JSON.parse(body));
                 }
             });
 
@@ -80,7 +71,7 @@ var WebSearch = function(){
 
     var Url = 'https://api.cognitive.microsoft.com/bing/v5.0/search?q=';
 
-    WebSearch.prototype.search = function(text){
+    WebSearch.prototype.search = function(text, callback){
         request(
             {
                 url: Url+ text,
@@ -91,14 +82,10 @@ var WebSearch = function(){
             },
             function(error, response, body) {
                 if (error) {
-                    console.log(error);
-                    return error;
+                    callback(error);
+
                 } else {
-                    console.log(response.statusCode, body);
-                    return {
-                        response: response,
-                        body: body
-                    }
+                    callback(JSON.parse(body));
                 }
             });
     }
@@ -109,16 +96,28 @@ exports.EntityLinking = EntityLinking;
 exports.WebSearch = WebSearch;
 exports.NewsSearch = NewsSearch;
 
-/*
+var test = function (data){
+    console.log(data);
+    console.log('called bitches');
+}
 
+/*
 var testing = new EntityLinking();
-testing.log('Prime Minister Ranil Wickremesinghe on Monday said that Sri Lanka has failed to reap the maximum benefits from the economic concept introduced by late President J.R.Jayewardene.He said that the present government will strive towards bringing these benefits to the country.' +
+var bla = testing.find('Prime Minister Ranil Wickremesinghe on Monday said that Sri Lanka has failed to reap the maximum benefits from the economic concept introduced by late President J.R.Jayewardene.He said that the present government will strive towards bringing these benefits to the country.' +
     'The Prime Minister added that President Jayewardene wanted to keep socialism till the open economy was fully introduced to the country.' +
     'Until then, he said that he would introduce Free Trade Zones. Six electorates in the Gampaha district were set apart for such economic zones,”the Prime Minister said.' +
     'Prime Minister Wickremesinghe said that the former President brought foreign investment to the country and introduced an open economic policy.' +
-    'Prime Minister Wickremesinghe was speaking at the 110th birth anniversary commemoration of former President J. R.Jayewardene held at the J.R.Jayewardene Centre on Monday evening')
+    'Prime Minister Wickremesinghe was speaking at the 110th birth anniversary commemoration of former President J. R.Jayewardene held at the J.R.Jayewardene Centre on Monday evening', test);
+
 
 var testing = new NewsSearch();
-testing.search('billl');
+testing.search('bill', test);
+
+
+var testing = new WebSearch();
+testing.search('bill', test);
 
 */
+//var testing = new NewsSearch();
+//testing.search('bill');
+
