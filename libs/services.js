@@ -6,13 +6,13 @@ var request = require('request');
 
 request.debug = true;
 
-var EntityLinking = function(){
+var EntityLinking = function(text, callback){
 
     var apiKey =  '32aedaafec144d49b791910d13963a6e';
 
     var Url = 'https://api.projectoxford.ai/entitylinking/v1.0/link'
 
-    EntityLinking.prototype.find = function(text, callback){
+    find = function(text, callback){
 
         request(
             {
@@ -34,16 +34,18 @@ var EntityLinking = function(){
                 }
             });
     }
+
+    find(text, callback);
 }
 
 
-var NewsSearch = function(){
+var NewsSearch = function(text, callback){
 
     var apiKey = 'fee561f616bf409cb7c39bedf29426ab';
 
     var Url = 'https://api.cognitive.microsoft.com/bing/v5.0/news/?q=';
 
-    NewsSearch.prototype.search = function(text, callback){
+    var search = function(text, callback){
         request(
             {
                 url: Url+ text,
@@ -63,15 +65,17 @@ var NewsSearch = function(){
 
     }
 
+    search(text, callback);
+
 }
 
-var WebSearch = function(){
+var WebSearch = function(text, callback){
 
     var apiKey = 'fee561f616bf409cb7c39bedf29426ab';
 
     var Url = 'https://api.cognitive.microsoft.com/bing/v5.0/search?q=';
 
-    WebSearch.prototype.search = function(text, callback){
+    var search = function(text, callback){
         request(
             {
                 url: Url+ text,
@@ -89,6 +93,8 @@ var WebSearch = function(){
                 }
             });
     }
+
+    search(text, callback)
 
 }
 
@@ -96,7 +102,7 @@ exports.EntityLinking = EntityLinking;
 exports.WebSearch = WebSearch;
 exports.NewsSearch = NewsSearch;
 
-function test(data){
+var test = function(data){
     console.log(data);
 }
 
@@ -108,14 +114,23 @@ function test(data){
 //     'Prime Minister Wickremesinghe said that the former President brought foreign investment to the country and introduced an open economic policy.' +
 //     'Prime Minister Wickremesinghe was speaking at the 110th birth anniversary commemoration of former President J. R.Jayewardene held at the J.R.Jayewardene Centre on Monday evening', test);
 
+var searchString = 'Prime Minister Ranil Wickremesinghe on Monday said that Sri Lanka has failed to reap the maximum benefits from the economic concept introduced by late President J.R.Jayewardene.He said that the present government will strive towards bringing these benefits to the country.' +
+    'The Prime Minister added that President Jayewardene wanted to keep socialism till the open economy was fully introduced to the country.' +
+    'Until then, he said that he would introduce Free Trade Zones. Six electorates in the Gampaha district were set apart for such economic zones,”the Prime Minister said.' +
+    'Prime Minister Wickremesinghe said that the former President brought foreign investment to the country and introduced an open economic policy.' +
+    'Prime Minister Wickremesinghe was speaking at the 110th birth anniversary commemoration of former President J. R.Jayewardene held at the J.R.Jayewardene Centre on Monday evening';
+
+//var testing = new EntityLinking(searchString, test);
+
+// var testing = new NewsSearch('bill', test);
+
+// var testing = new WebSearch('bill', test);
+
+// testing.search('bill', test);
 
 
-var testing = new NewsSearch();
-testing.search('bill', test);
 
-
-//var testing = new WebSearch();
-//testing.search('bill', test);
+// testing.search('bill', test);
 
 //var testing = new NewsSearch();
 //testing.search('bill');
