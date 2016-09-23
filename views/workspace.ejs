@@ -403,11 +403,11 @@
                 <div class="row" style="margin-top: 30px;">
                     <div class="alert alert-success" role="alert" id="ai_tips">
                         <h4 class="alert-heading">Here is a Tip!</h4>
-                        <p>Want to know about
+                        <!--<p>Want to know about-->
 
-                            <a href="#" class="" data-toggle="modal" data-target="#myModal" data-content="<p>here is content</p>" data-title="Post your video">Ranil Wickramasinghe</a>
+                            <!--<a href="#" class="" data-toggle="modal" data-target="#myModal" data-content="<p>here is content</p>" data-title="Post your video">Ranil Wickramasinghe</a>-->
 
-                        </p>
+                        <!--</p>-->
                     </div>
                 </div>
             </div>
@@ -911,6 +911,7 @@
 
         var entityArray=msg[0];
         var searchResultArray=msg[1];
+        $('#ai_tips').html('<h4 class="alert-heading">Here is a Tip!</h4>');
         for (i = 0; i < entityArray.length; i++) {
             appendTips(entityArray[i],searchResultArray[i]);
         }
