@@ -20,8 +20,8 @@ var autoIncrement = require('mongoose-auto-increment');
 var config = require('./config');
 var fb = require('fb');
 var User = require('./model/user');
-var FACEBOOK_APP_ID = "1653824821565450";
-var FACEBOOK_APP_SECRET = "8887aeba96c5dc4312b9475cf1db775c";
+var FACEBOOK_APP_ID = "959299700862684";
+var FACEBOOK_APP_SECRET = "24d1d6a2d3172e308bfa2c2069f577bd";
 
 
 app.config = config;
