@@ -7,13 +7,14 @@
 var app = require('../app');
 var debug = require('debug')('ColloborativeWhiteboard:server');
 var http = require('http');
-
+var service=require('../libs/services');
 /**
  * Get port from environment and store in Express.
  */
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+
 
 /**
  * Create HTTP server.
@@ -23,7 +24,9 @@ var server = http.createServer(app);
 
 var io = require('socket.io')(server);
 
-
+var entityLinking=service.EntityLinking();
+var aiMessageCount=0;
+var aiCheckMessage="";
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -49,6 +52,14 @@ io.on('connection', function (socket) {
 
   socket.on('ai message',function(msg){
     console.log('AI message'+msg);
+    aiMessageCount+=1;
+    aiCheckMessage+=msg+" \n";
+    if(aiMessageCount==2){
+      console.log("Sending a message to AI");
+      var text=entityLinking.find(aiCheckMessage);
+      console.log(text);
+    }
+
   });
 
   socket.on('chat message',function (msg) {
