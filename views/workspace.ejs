@@ -623,7 +623,7 @@
 <div class="popup-box chat-popup" id="qnimate">
     <div class="popup-head">
 
-        <div class="popup-head-left pull-left"><img src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" alt="iamgurdeeposahan"> Group Name</div>
+        <div class="popup-head-left pull-left"><img src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" alt="iamgurdeeposahan"> Workspace </div>
 
         <div class="popup-head-right pull-right">
             <div class="btn-group">
@@ -933,7 +933,8 @@ canvas.renderAll();
             return ((this.getHours() < 10)?"0":"") + this.getHours() +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds();
         }
         var newDate = new Date();
-        var htmlText='<br><div class="direct-chat-msg doted-border">'+
+        var htmlText='<br><div class="direct-chat-msg doted-border">'
+
                 +'<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+ text.name +'</span></div>'+
                 '<img alt="message user image" src="'+text.user+'" class="direct-chat-img">'+
                 '<div class="direct-chat-text">'+text.text+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">'+ new Date().toLocaleTimeString(); +'</span>'+

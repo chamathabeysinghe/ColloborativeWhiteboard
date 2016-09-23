@@ -26,6 +26,7 @@ var io = require('socket.io')(server);
 
 var aiMessageCount=0;
 var aiCheckMessage="";
+
 var serviceAPI = new require('../libs/services');
 
 /**
