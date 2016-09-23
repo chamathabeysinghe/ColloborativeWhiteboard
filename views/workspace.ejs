@@ -402,7 +402,7 @@
                 </div>
                 <div class="row" style="margin-top: 30px;">
                     <div class="alert alert-success" role="alert" id="ai_tips">
-                        <h4 class="alert-heading">Here is a Tip!</h4>
+                        <h4 class="alert-heading">Do you need a help?</h4>
                         <!--<p>Want to know about-->
 
                             <!--<a href="#" class="" data-toggle="modal" data-target="#myModal" data-content="<p>here is content</p>" data-title="Post your video">Ranil Wickramasinghe</a>-->
@@ -682,10 +682,9 @@
     <div class="popup-messages-footer">
         <textarea id="status_message" placeholder="Type a message..." rows="10" cols="40" name="message"></textarea>
         <div class="btn-footer">
-            <button class="bg_none" id="send-msg"><i class="glyphicon glyphicon-film"></i> </button>
+            <button class="bg_none pull-right" id="send-msg"><i class="glyphicon glyphicon-send"></i> </button>
             <!--<button class="bg_none"><i class="glyphicon glyphicon-camera"></i> </button>-->
             <!--<button class="bg_none"><i class="glyphicon glyphicon-paperclip"></i> </button>-->
-            <button class="bg_none pull-right" id="send-like"><i class="glyphicon glyphicon-thumbs-up"></i> </button>
         </div>
     </div>
 </div>
@@ -947,13 +946,15 @@ canvas.renderAll();
 
     }
 
+
+
 //    append content to support area
     function appendTips(text,content) {
         console.log("Appending to Modal");
         console.log(text);
         console.log(content);
         var currentHtml=$('#ai_tips').html();
-        var appendHtml='<p>Want to know about ' +
+        var appendHtml='<p>  ' +
                 '<a href="#" class="" data-toggle="modal" data-target="#myModal" data-content="'+content+'" data-title="'+text+'">'+text+'</a>' +
                 '</p>';
         $('#ai_tips').html(currentHtml+appendHtml);
