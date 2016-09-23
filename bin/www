@@ -26,7 +26,7 @@ var io = require('socket.io')(server);
 
 var aiMessageCount=0;
 var aiCheckMessage="";
-
+var aiLatestMessage="";
 var serviceAPI = new require('../libs/services');
 
 /**
@@ -55,12 +55,17 @@ io.on('connection', function (socket) {
     console.log('AI message'+msg);
     aiMessageCount+=1;
     aiCheckMessage+=msg+" \n";
-    if(aiMessageCount==2){
-      console.log("Sending a message to AI");
-      var websearc=serviceAPI.EntityLinking(aiCheckMessage,entityManage);
-      aiMessageCount=0;
-
+    aiLatestMessage+=msg+" \n";
+    if(aiLatestMessage.length>20){
+        aiLatestMessage="";
+        var websearc=serviceAPI.EntityLinking(aiCheckMessage,entityManage);
     }
+    // if(aiMessageCount==2){
+    //   console.log("Sending a message to AI");
+    //     var websearc=serviceAPI.EntityLinking(aiCheckMessage,entityManage);
+    //     aiMessageCount=0;
+    //
+    // }
 
   });
 
@@ -68,12 +73,20 @@ io.on('connection', function (socket) {
     console.log('receive message: '+msg);
     aiMessageCount+=1;
     aiCheckMessage+=msg.text+" \n";
-    if(aiMessageCount==2){
-      console.log("Sending a message to AI");
-      var websearc=serviceAPI.EntityLinking(aiCheckMessage,entityManage);
-      aiMessageCount=0;
+      aiLatestMessage+=msg.text+" \n";
+      console.log(aiLatestMessage.length);
+      console.log(aiLatestMessage);
+      if(aiLatestMessage.length>20){
+          aiLatestMessage="";
+          var websearc=serviceAPI.EntityLinking(aiCheckMessage,entityManage);
+      }
 
-    }
+    // if(aiMessageCount==2){
+    //   console.log("Sending a message to AI");
+    //   var websearc=serviceAPI.EntityLinking(aiCheckMessage,entityManage);
+    //   aiMessageCount=0;
+    //
+    // }
     io.emit('chat message',msg);
   });
 
