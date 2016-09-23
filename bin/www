@@ -110,27 +110,34 @@ function entityManage($response) {
     resultArray.push(name);
   }
   //io.emit('receive ai',resultArray);
-  acquireSearchResults(resultArray);
+  acquireSearchResults();
 
 }
 
-
-function acquireSearchResults(array){
-
-  for(i=0;i<array.length;i++){
-    var keyword=array[i];
-    serviceAPI.WebSearch(keyword,manageSearchResults);
-  }
-
-
+var searchedCount=0;
+function acquireSearchResults() {
+  var keyword=resultArray[searchedCount];
+  searchedCount+=1;
+  serviceAPI.WebSearch(keyword,manageSearchResults);
 }
+// function acquireSearchResults(array){
+//
+//   for(i=0;i<array.length;i++){
+//     var keyword=array[i];
+//     serviceAPI.WebSearch(keyword,manageSearchResults);
+//   }
+// }
 
 function manageSearchResults($response) {
   console.log(JSON.stringify($response));
   searchResultArray.push(escapeHtml(processWebSearch($response)));
   if(searchResultArray.length==resultArray.length){
     var outputArray=[resultArray,searchResultArray];
+    searchedCount=0;
     io.emit('receive ai',outputArray);
+  }
+  else{
+    acquireSearchResults();
   }
 }
 
