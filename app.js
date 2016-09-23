@@ -41,6 +41,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(methodOverride());
 app.use(session({
     resave: true,
@@ -116,7 +117,7 @@ passport.use(
 
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/users/', users);
 app.use('/workspace', workspace);
 app.get('/auth/facebook/:id/', function (req, res, next) {
     passport.authenticate(
@@ -133,7 +134,7 @@ app.get('/auth/facebook/login_callback/:id', function (req, res, next) {
         'facebook',
         {
             callbackURL: "/auth/facebook/login_callback/" + req.params.id
-            , successRedirect: "/" + req.params.id + "/"
+            , successRedirect: "/" + req.params.id + ""
             , failureRedirect: "/",
             scope: ['user_friends', 'email']
         }

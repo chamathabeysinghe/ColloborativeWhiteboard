@@ -73,7 +73,7 @@ var WebSearch = function(text, callback){
 
     var apiKey = 'fee561f616bf409cb7c39bedf29426ab';
 
-    var Url = 'https://api.cognitive.microsoft.com/bing/v5.0/search?q=';
+    var Url = 'https://api.cognitive.microsoft.com/bing/v5.0/search?mkt=en-us&q=';
 
     var search = function(text, callback){
         request(
