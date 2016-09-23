@@ -24,7 +24,6 @@ var server = http.createServer(app);
 
 var io = require('socket.io')(server);
 
-var entityLinking=service.EntityLinking();
 var aiMessageCount=0;
 var aiCheckMessage="";
 

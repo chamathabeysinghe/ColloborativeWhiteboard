@@ -931,7 +931,7 @@
     function appendTips(text,content) {
         var currentHtml=$('#ai_tips').html();
         var appendHtml='<p>Want to know about ' +
-                '<a href="#" class="" data-toggle="modal" data-target="#myModal" data-content="<p>here is content</p>" data-title='+text+'>'+text+'</a>' +
+                '<a href="#" class="" data-toggle="modal" data-target="#myModal" data-content="<div><p>here is content</p></div>" data-title='+text+'>'+text+'</a>' +
                 '</p>';
         $('#ai_tips').html(currentHtml+appendHtml);
     }
