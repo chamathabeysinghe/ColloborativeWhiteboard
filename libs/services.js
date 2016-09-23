@@ -4,7 +4,7 @@
 
 var request = require('request');
 
-request.debug = true;
+request.debug = false;
 
 var EntityLinking = function(text, callback){
 
@@ -71,7 +71,7 @@ var NewsSearch = function(text, callback){
 
 var WebSearch = function(text, callback){
 
-    var apiKey = 'fee561f616bf409cb7c39bedf29426ab';
+    var apiKey = 'e160d7e6696b40d6b77376dc7e31e8c7';
 
     var Url = 'https://api.cognitive.microsoft.com/bing/v5.0/search?mkt=en-us&q=';
 
