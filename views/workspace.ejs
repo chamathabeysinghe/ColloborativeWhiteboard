@@ -908,16 +908,21 @@
 //    receive ai helper messages
     socket.on('receive ai',function (msg) {
        console.log('Received the message');
+
        appendTips(msg,'Content');
     });
 
 
 //    append message to chat box
     function appendMessage(text){
+        Date.prototype.timeNow = function () {
+            return ((this.getHours() < 10)?"0":"") + this.getHours() +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds();
+        }
+        var newDate = new Date();
         var htmlText='<br><div class="direct-chat-msg doted-border">'+
-                +'<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">Osahan</span></div>'+
-                '<img alt="message user image" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img">'+
-                '<div class="direct-chat-text">'+text+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">3.36 PM</span>'+
+                +'<div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left">'+ text.name +'</span></div>'+
+                '<img alt="message user image" src="'+text.user+'" class="direct-chat-img">'+
+                '<div class="direct-chat-text">'+text.text+'</div><div class="direct-chat-info clearfix"><span class="direct-chat-timestamp pull-right">'+ new Date().toLocaleTimeString(); +'</span>'+
                 '</div> </div>';
         $('#site-message-box').html='<p>asdfadfad</p>';
 
@@ -951,7 +956,9 @@
 
 <script>
     $('#send-msg').click(function (event) {
-        var message=$('#status_message').val();
+        var message={text: $('#status_message').val(),
+                user:"<%= pic %>",
+                name: "<%= name %>"};
         console.log("Message sent "+message);
         $('#status_message').val("");
         sendChatMessage(message);

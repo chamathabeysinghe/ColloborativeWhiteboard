@@ -3,7 +3,9 @@ var router = express.Router();
 
 
 router.get('/', function(req, res, next) {
-    res.render('workspace', { title: 'Express' });
+    res.render('workspace', { title: 'Express' ,
+            name : req.user.displayName,
+            pic : req.user.photos[0].value});
 });
 
 
