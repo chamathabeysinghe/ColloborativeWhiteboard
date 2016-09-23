@@ -24,6 +24,7 @@ var FACEBOOK_APP_ID = "959299700862684";
 var FACEBOOK_APP_SECRET = "24d1d6a2d3172e308bfa2c2069f577bd";
 
 
+
 app.config = config;
 //setup mongoose
 app.db = mongoose.connect(config.mongodb.uri);
