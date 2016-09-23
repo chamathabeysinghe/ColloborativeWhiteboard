@@ -654,9 +654,9 @@
 
 
             <!-- Message. Default to the left -->
-            <!--<div class="direct-chat-msg doted-border">-->
+            <div class="direct-chat-msg doted-border">
                 <!--<div class="direct-chat-info clearfix">-->
-                    <!--<span class="direct-chat-name pull-left">Osahan</span>-->
+                    <!--<span class="direct-chat-name pull-left">Chamath</span>-->
                 <!--</div>-->
                 <!--&lt;!&ndash; /.direct-chat-info &ndash;&gt;-->
                 <!--<img alt="message user image" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="direct-chat-img">&lt;!&ndash; /.direct-chat-img &ndash;&gt;-->
@@ -668,8 +668,8 @@
                 <!--</div>-->
 
 
-                <!--&lt;!&ndash;&lt;!&ndash; /.direct-chat-text &ndash;&gt;&ndash;&gt;-->
-            <!--</div>-->
+                <!--&lt;!&ndash; /.direct-chat-text &ndash;&gt;-->
+            </div>
             <div id="div2">
 
             </div>
@@ -908,7 +908,12 @@
 //    receive ai helper messages
     socket.on('receive ai',function (msg) {
        console.log('Received the message');
-       appendTips(msg,'Content');
+        var entityArray=msg[0];
+        var searchResultArray=msg[1];
+        for (i = 0; i < entityArray.length; i++) {
+            appendTips(entityArray[i],searchResultArray[i]);
+        }
+
     });
 
 
@@ -929,9 +934,12 @@
 
 //    append content to support area
     function appendTips(text,content) {
+        console.log("Appending to Modal");
+        console.log(text);
+        console.log(content);
         var currentHtml=$('#ai_tips').html();
         var appendHtml='<p>Want to know about ' +
-                '<a href="#" class="" data-toggle="modal" data-target="#myModal" data-content="<div><p>here is content</p></div>" data-title='+text+'>'+text+'</a>' +
+                '<a href="#" class="" data-toggle="modal" data-target="#myModal" data-content="'+content+'" data-title='+text+'>'+text+'</a>' +
                 '</p>';
         $('#ai_tips').html(currentHtml+appendHtml);
     }

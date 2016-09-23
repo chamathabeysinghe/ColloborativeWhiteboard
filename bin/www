@@ -26,6 +26,7 @@ var io = require('socket.io')(server);
 
 var aiMessageCount=0;
 var aiCheckMessage="";
+var serviceAPI = new require('../libs/services');
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -55,8 +56,9 @@ io.on('connection', function (socket) {
     aiCheckMessage+=msg+" \n";
     if(aiMessageCount==2){
       console.log("Sending a message to AI");
-      var testing = new require('../libs/services');
-      var websearc=testing.WebSearch('bill',webs);
+      var websearc=serviceAPI.EntityLinking(aiCheckMessage,entityManage);
+      aiMessageCount=0;
+
     }
 
   });
@@ -68,12 +70,104 @@ io.on('connection', function (socket) {
 
 
 });
+
+var resultArray;
+var searchResultArray;
 /**
  * Normalize a port into a number, string, or false.
  */
+var entityMap = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': '&quot;',
+  "'": '&#39;',
+  "/": '&#x2F;'
+};
 
-function webs($response) {
+function escapeHtml(string) {
+  return String(string).replace(/[&<>"'\/]/g, function (s) {
+    return entityMap[s];
+  });
+}
+function entityManage($response) {
   console.log("This is our search results");
+  console.log(JSON.stringify($response));
+  var entities=$response.entities;
+  resultArray=new Array();
+  searchResultArray=new Array();
+  for(var i in entities){
+    var name=entities[i].name;
+    console.log(name);
+    resultArray.push(name);
+  }
+  //io.emit('receive ai',resultArray);
+  acquireSearchResults(resultArray);
+
+}
+function acquireSearchResults(array){
+
+  for(i=0;i<array.length;i++){
+    var keyword=array[i];
+    serviceAPI.WebSearch(keyword,manageSearchResults);
+  }
+
+
+}
+
+function manageSearchResults($response) {
+  console.log(JSON.stringify($response));
+  searchResultArray.push(escapeHtml(processWebSearch($response)));
+  if(searchResultArray.length==resultArray.length){
+    var outputArray=[resultArray,searchResultArray];
+    io.emit('receive ai',outputArray);
+  }
+}
+
+var processWebSearch = function(response){
+  string = '';
+  var webPages = response.webPages.value;
+
+  string = string + '<div>';
+  for(i=0; i < webPages.length; i++){
+    string =  string + processWebPage(webPages[i])
+  }
+  string = string + '</div>'
+
+  if(response.hasOwnProperty('images')){
+    var images = response.images.value;
+    string = string + '<div>'
+    for(i=0; i < images.length; i++){
+      string =  string + processImage(images[i])
+    }
+    string = string + '</div>'
+  }
+
+  /*
+   var news = response.news.value;
+   string = string + '<div>'
+   for(i=0; i < news.length; i++){
+   string =  string + processNews(news[i])
+   }
+   string = string + '</div>'
+   */
+  console.log(string)
+  return string;
+
+}
+
+var processWebPage = function(webPage){
+  string = '';
+  string = string + '<a href="'+ webPage.url+'" > <h5>' + webPage.name + '</h5> </a>'
+  string = string + '<p>'+ webPage.snippet + '</p>';
+  return string;
+}
+
+var processImage = function(image){
+  string = '';
+  string = string + '<img src="'+image.thumbnailUrl+'" alt="'+image.name +'">';
+  string = string + '<p>' + image.name + '</p>';
+  return string
 }
 
 function normalizePort(val) {
