@@ -118,10 +118,16 @@ function entityManage($response) {
   var entities=$response.entities;
   resultArray=new Array();
   searchResultArray=new Array();
+  var count=0;
+  console.log(entities.length);
+  if(entities.length==0){
+      return;
+  }
   for(var i in entities){
     var name=entities[i].name;
     console.log(name);
     resultArray.push(name);
+
   }
   //io.emit('receive ai',resultArray);
   acquireSearchResults();
