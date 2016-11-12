@@ -71,7 +71,7 @@ var NewsSearch = function(text, callback){
 
 var WebSearch = function(text, callback){
 
-    var apiKey = 'e160d7e6696b40d6b77376dc7e31e8c7';
+    var apiKey = 'ce51df2384f54854acd85638b9adda2f';
 
     var Url = 'https://api.cognitive.microsoft.com/bing/v5.0/search?mkt=en-us&count=5&q=';
 
@@ -89,7 +89,9 @@ var WebSearch = function(text, callback){
                     callback(error);
 
                 } else {
-                    callback(JSON.parse(body));
+                    console.log("**********Web results**************")
+                    console.log(body);
+                    callback(text,JSON.parse(body));
                 }
             });
     }
