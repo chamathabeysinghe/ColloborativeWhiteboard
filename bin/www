@@ -54,6 +54,10 @@ io.on('connection', function (socket) {
   socket.on('ai message',function(msg){
     console.log('AI message'+msg);
     aiMessageCount+=1;
+    if(aiCheckMessage.replace("\n","")==(msg.replace("\n",""))){
+      console.log("EQUALS");
+      return;
+    }
     aiCheckMessage+=msg+" \n";
     aiLatestMessage+=msg+" \n";
     if(aiLatestMessage.length>20){
@@ -130,24 +134,17 @@ function entityManage($response) {
 
   }
   //io.emit('receive ai',resultArray);
-  acquireSearchResults();
-
+  // acquireSearchResults();
+  acquireSearchResults2();
 }
 
 var searchedCount=0;
+/**  //uncomment if not working this
 function acquireSearchResults() {
   var keyword=resultArray[searchedCount];
   searchedCount+=1;
   serviceAPI.WebSearch(keyword,manageSearchResults);
 }
-// function acquireSearchResults(array){
-//
-//   for(i=0;i<array.length;i++){
-//     var keyword=array[i];
-//     serviceAPI.WebSearch(keyword,manageSearchResults);
-//   }
-// }
-
 function manageSearchResults($response) {
   console.log(JSON.stringify($response));
   searchResultArray.push(escapeHtml(processWebSearch($response)));
@@ -160,11 +157,32 @@ function manageSearchResults($response) {
     acquireSearchResults();
   }
 }
+**/
+function acquireSearchResults2(){
+
+  for(i=0;i<resultArray.length;i++){
+    var keyword=resultArray[i];
+    serviceAPI.WebSearch(keyword,manageSearchResults2);
+  }
+}
+resultArray2=new Array();
+function manageSearchResults2($keyword,$response) {
+  // console.log(JSON.stringify($response));
+  resultArray2.push($keyword);
+  searchResultArray.push(escapeHtml(processWebSearch($response)));
+  if(searchResultArray.length==resultArray.length){
+    var outputArray=[resultArray2,searchResultArray];
+    searchedCount=0;
+    io.emit('receive ai',outputArray);
+    resultArray=new Array();
+    searchResultArray=new Array();
+    resultArray2=new Array();
+  }
+}
 
 var processWebSearch = function(response){
   string = '';
   var webPages = response.webPages.value;
-
   string = string + '<div>';
   for(i=0; i < webPages.length; i++){
     string =  string + processWebPage(webPages[i])
@@ -204,7 +222,7 @@ var processImage = function(image){
   string = '';
   string = string + '<img src="'+image.thumbnailUrl+'" alt="'+image.name +'">';
   string = string + '<p>' + image.name + '</p>';
-  return string
+  return string;
 }
 
 function normalizePort(val) {

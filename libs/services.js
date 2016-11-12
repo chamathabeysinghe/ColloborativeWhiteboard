@@ -89,7 +89,9 @@ var WebSearch = function(text, callback){
                     callback(error);
 
                 } else {
-                    callback(JSON.parse(body));
+                    console.log("**********Web results**************")
+                    console.log(body);
+                    callback(text,JSON.parse(body));
                 }
             });
     }
