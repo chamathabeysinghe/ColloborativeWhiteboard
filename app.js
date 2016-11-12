@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var homepage=require('./routes/home');
 var category=require('./routes/category')
+var contentwriting=require('./routes/contentwriting');
 
 var users = require('./routes/users');
 var workspace = require('./routes/workspace')
@@ -124,6 +125,7 @@ app.use('/home',homepage);
 app.use('/category',category);
 app.use('/users/', users);
 app.use('/workspace', workspace);
+app.use('/contentwriting',contentwriting);
 app.get('/auth/facebook/:id/', function (req, res, next) {
     passport.authenticate(
         'facebook',
